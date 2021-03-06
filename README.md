@@ -32,3 +32,5 @@ python ./main.py
 
 
 #### References
+
+- https://github.com/NilsJPWerner/autoDocstring/blob/master/src/docstring/templates/google.mustache
