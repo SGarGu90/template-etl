@@ -2,9 +2,9 @@
 
 ## Stack
 
-- Python 3.9.1
-- Conda 4.9.2
-
+- python 3.9
+- conda 4.9.2
+- pip 21.0.1
 
 #### Setup local environment and plugins
 - conda create --name name_env
@@ -13,6 +13,7 @@
 
 - conda install pip
 
+- pip install -r requirements.txt
 
 #### Run application
 
@@ -33,4 +34,4 @@ python ./main.py
 
 #### References
 
-- https://github.com/NilsJPWerner/autoDocstring/blob/master/src/docstring/templates/google.mustache
+- https://github.com/NilsJPWerner/autoDocstring
