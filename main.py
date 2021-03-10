@@ -1,14 +1,13 @@
 import sys
+
 from argparse import ArgumentParser
-
-from src.settings.loader import settings_loader
-
+from src.settings import settings_loader
 from src.orchestrator import *
 
 def main(args):
     """Capture logs and environment values
     """
-    # 2DO if bump version, update and commit
+
     settings = settings_loader(args.app_env)
 
     orchestrator(args, settings)
