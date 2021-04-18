@@ -20,7 +20,7 @@ if __name__ == '__main__':
         """
         parser = ArgumentParser(description="ETL arguments parser")
 
-        parser.add_argument('--app-env', type=str, choices=['dev', 'prod'], default='dev', help=': Choose environment execution config')
+        parser.add_argument('--environment', '-env', type=str, choices=['dev', 'prod'], default='dev', help=': Choose environment execution config')
 
         app_args = parser.parse_args()
 
