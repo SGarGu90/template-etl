@@ -1,2 +1,2 @@
 APP_VERSION='0.0.0'
-DATA_DIRECTORY = "./data_sample"
+DATA_DIR_PATH = "./data_sample"

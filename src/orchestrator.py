@@ -1,5 +1,4 @@
-from src.helpers import *
-
+from src.Helper.Helper import HelperClass
 
 def orchestrator(args, settings):
     """Orchestrator app
