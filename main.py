@@ -1,12 +1,23 @@
-import sys
+import sys, logging
 
 from argparse import ArgumentParser
+
 from src.settings import settings_loader
+from src.Logger.Logger import LoggerClass
 from src.orchestrator import *
 
 def main(args):
     """Capture logs and environment values
     """
+
+    # Creating the Logger Object
+    logger = LoggerClass(log_path="logs/",
+                             logging_level=logging.DEBUG,
+                             log_identifier="Main ETL logger")
+
+    # Init the logger and first message
+    logger.init_logger()
+    logger.first_log()
 
     settings = settings_loader(args.app_env)
 

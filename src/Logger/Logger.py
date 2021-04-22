@@ -1,4 +1,3 @@
-
 import logging
 import datetime
 import sys
@@ -30,7 +29,7 @@ class LoggerClass:
 
             # File handler on Disk
             file_handler = logging.FileHandler(self.log_path +
-                                               datetime.date.today().strftime(self.date_format) +
+                                               datetime.date.today().strftime(self.file_date_format) +
                                                '_' + self.log_identifier +
                                                '_ETL.log', mode='w')
 
@@ -41,11 +40,13 @@ class LoggerClass:
             console_handler.setLevel(self.logging_level)
 
             # Create formatter and addit to the handlers
-            formatter = logging.Formatter('[%(asctime)s] || %(levelname)s || \
-                                            (%(filename)s:%(lineno)s || \
-                                            %(message)s', datefmt=self.print_date_format)
-            file_handler.setFormatter(formatter)
-            console_handler.setFormatter(formatter)
+            # formatter_0 = logging.Formatter('[%(asctime)s] || %(levelname)s || \
+            #                                 (%(filename)s:%(lineno)s || \
+            #                                 %(message)s', datefmt=self.print_date_format)
+            formatter_1 = logging.Formatter('%(levelname)s [%(asctime)s] \n ├── %(filename)s:%(lineno)s \n └── %(message)s', datefmt=self.print_date_format)
+            formatter_2 = logging.Formatter('%(levelname)s [%(asctime)s] %(filename)s:%(lineno)s \n └── %(message)s \n', datefmt=self.print_date_format)
+            file_handler.setFormatter(formatter_2)
+            console_handler.setFormatter(formatter_2)
 
             # Add the handlers to the logger
             logger.addHandler(console_handler)
