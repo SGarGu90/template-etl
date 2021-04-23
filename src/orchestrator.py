@@ -1,7 +1,6 @@
-from src.Helper.Helper import HelperClass
 
-def orchestrator(args, settings):
+def orchestrator(args):
     """Orchestrator app
     """
 
-    print("App orchestrator execution\n", "Arguments: ", args, "\n", "Settings: ", settings)
+    print("App orchestrator execution\n", "Arguments: ", args, "\n")

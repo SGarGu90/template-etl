@@ -25,7 +25,7 @@ class LoggerClass:
         try:
             # Defining log level
             logger = logging.getLogger(self.log_identifier)
-            logger.setLevel(self.logging_level)
+            logger.setLevel(logging.DEBUG)
 
             # File handler on Disk
             file_handler = logging.FileHandler(self.log_path +
@@ -33,11 +33,11 @@ class LoggerClass:
                                                '_' + self.log_identifier +
                                                '_ETL.log', mode='w')
 
-            file_handler.setLevel(self.logging_level)
+            file_handler.setLevel(logging.DEBUG)
 
             # Console Handler
             console_handler = logging.StreamHandler(stream=sys.stdout)
-            console_handler.setLevel(self.logging_level)
+            console_handler.setLevel(logging.DEBUG)
 
             # Create formatter and addit to the handlers
             # formatter_0 = logging.Formatter('[%(asctime)s] || %(levelname)s || \
