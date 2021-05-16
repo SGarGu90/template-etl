@@ -2,20 +2,15 @@ import sys, logging
 
 from argparse import ArgumentParser
 
-from src.settings import settings_loader
 from src.Logger.Logger import *
 from src.orchestrator import *
-from src.env_config.config import *
+from src.env_config.EnvLoader import *
 
 def main(args):
     """Capture logs and environment values
     """
 
-    config = LoadEnvironmentClass()
-
-    print(config.log_path)
-    print(config.log_level)
-    print(config.log_identifier)
+    config = EnvLoader(args.environment)
 
     # Creating the Logger Object
     logger = LoggerClass(log_path=config.log_path,
@@ -27,7 +22,11 @@ def main(args):
     # First default log
     logger.first_log()
 
-    orchestrator(args)
+    try:
+        orchestrator(args)
+    except Exception as err:
+        logger.log_traceback(err)
+
 
 
 if __name__ == '__main__':
@@ -38,11 +37,9 @@ if __name__ == '__main__':
         parser = ArgumentParser(description="ETL arguments parser")
 
         parser.add_argument('--environment', '-env', type=str, choices=['dev', 'prod'], default='dev', help=': Choose environment execution config')
-        parser.add_argument('--logs-dir', '-ldir', type=str, default='logs/', help=': Choose logs output directory, default (logs/)')
-        parser.add_argument('--logs-identifier', '-lid', type=str, default='Main ETL logger', help=': Choose logger identifier name, default (Main ETL logger)')
         app_args = parser.parse_args()
         main(app_args)
 
     except Exception as err:
-        print("\n Main function Error: ", sys.exc_info()[0])
+        print("\n Main function Error: ", sys.exc_info()[0], err)
         sys.exit(-1)
