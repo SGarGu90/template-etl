@@ -57,7 +57,7 @@ class LoggerClass:
             file_handler = logging.FileHandler(self.log_path +
                                                datetime.date.today().strftime(self.file_date_format) +
                                                '_' + self.log_identifier +
-                                               '_ETL.log', mode='w')
+                                               '.log', mode='w')
 
             file_handler.setLevel(self.logging_level)
 
