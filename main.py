@@ -25,7 +25,7 @@ def main(args):
     logger.log.info(f'Arguments: {args}')
 
     try:
-        orchestrator(args, logger)
+        orchestrator(config, logger)
     except Exception as err:
         logger.log_traceback(err)
 
