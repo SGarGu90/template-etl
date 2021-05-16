@@ -16,11 +16,13 @@ def main(args):
     logger = LoggerClass(log_path=config.log_path,
                             logging_level=config.log_level,
                             log_identifier=config.log_identifier)
-
     # Init the logger and first message
     logger.init_logger()
+
     # First default log
-    logger.first_log()
+    logger.first_default_log()
+    # Print arguments using log
+    logger.log.info(f'Arguments: {args}')
 
     try:
         orchestrator(args)

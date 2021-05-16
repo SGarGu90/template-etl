@@ -17,7 +17,7 @@ class LoggerClass:
         self.log_path = log_path
         self.logging_level = self._set_logging_level(logging_level)
         self.log_identifier = log_identifier
-        self.logger = None
+        self.log = None
 
     def _set_logging_level(self, logging_level):
         if logging_level == "DEBUG":
@@ -69,19 +69,19 @@ class LoggerClass:
             # Add the handlers to the logger
             logger.addHandler(console_handler)
             logger.addHandler(file_handler)
-            self.logger = logger
+            self.log = logger
 
         except Exception as err:
-            self.logger.log(logging.ERROR, f'\n Init Logger Error ({err})')
+            self.log.log(logging.ERROR, f'\n Init Logger Error ({err})')
             sys.exit(-1)
 
-    def first_log(self):
+    def first_default_log(self):
         try:
-            self.logger.info("*********** Start Logger Execution: default log ************* \n")
-            self.logger.info("Type of file to be processed: %s")
+            self.log.info("*********** Start Logger Execution: default log ************* \n")
+            self.log.info("Type of file to be processed: %s")
 
         except Exception as err:
-            self.logger.log(logging.ERROR, f'\n First_log Error ({err})')
+            self.log.log(logging.ERROR, f'\n first_default_log Error ({err})')
             sys.exit(-1)
 
     def log_traceback(self, errMessage):
@@ -122,4 +122,4 @@ class LoggerClass:
         f'     └── {last_call_location} \n'
 
         # Print message based on type passed
-        self.logger.log(self.logging_level, traceback_message)
+        self.log.log(self.logging_level, traceback_message)
