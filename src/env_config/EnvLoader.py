@@ -85,7 +85,7 @@ class EnvLoader:
     def _set_environment_config_values(self):
         self.app_version = self.CONFIG['APP_INFO']['APP_VERSION']
 
-        self.data_dir_path = self._build_dir_path_by_env(self.CONFIG['APP_INFO']['DATA_DIR_PATH'])
+        self.data_dir_path = self._build_dir_path_by_env(self.CONFIG['APP_INFO']['SAMPLE_DATA_DIR_PATH'])
 
         self.log_path = self.CONFIG['LOGGING']['LOG_PATH']
         self.log_level = self.CONFIG['LOGGING']['LOG_LEVEL']
