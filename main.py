@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 
 from src.Logger.Logger import *
 from src.orchestrator import *
-from src.env_config.EnvLoader import *
+from src.EnvLoader.EnvLoader import *
 
 def main(args):
     """Capture logs and environment values

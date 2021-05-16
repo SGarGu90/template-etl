@@ -31,7 +31,7 @@ class EnvLoader:
         self._set_dir_separator_type()
 
         try:
-            config_file_path = self._build_path_by_dir_and_file_name("config", "default.ini")
+            config_file_path = self._get_path_to_config_file("config", "default")
             self._read_config_file(config_file_path)
 
             self._set_environment_config_values()
@@ -65,15 +65,13 @@ class EnvLoader:
             sys.exit(-1)
 
 
-    def _build_path_by_dir_and_file_name(self, dir_name, file_name):
-        path_dir_env = self._build_dir_path_by_env(dir_name)
-        return path_dir_env + file_name
+    def _get_path_to_config_file(self, dir_name, file_name):
+        path_dir_env = self._build_dir_path_by_name(dir_name)
+        return path_dir_env + file_name + "-" + self.ENV_TYPE + ".ini"
 
-
-    def _build_dir_path_by_env(self, dir_name):
-        config_root_dir = "." + self.DIR_SEP + dir_name
-        environment_dir = self.DIR_SEP + self.ENV_TYPE + self.DIR_SEP
-        return config_root_dir + environment_dir
+    def _build_dir_path_by_name(self, dir_name):
+        config_root_dir = "." + self.DIR_SEP + dir_name + self.DIR_SEP
+        return config_root_dir
 
 
     def _read_config_file(self, config_file_path):
@@ -85,7 +83,7 @@ class EnvLoader:
     def _set_environment_config_values(self):
         self.app_version = self.CONFIG['APP_INFO']['APP_VERSION']
 
-        self.data_dir_path = self._build_dir_path_by_env(self.CONFIG['APP_INFO']['SAMPLE_DATA_DIR_PATH'])
+        self.data_dir_path = self._build_dir_path_by_name(self.CONFIG['APP_INFO']['SAMPLE_DATA_DIR_PATH'])
 
         self.log_path = self.CONFIG['LOGGING']['LOG_PATH']
         self.log_level = self.CONFIG['LOGGING']['LOG_LEVEL']
