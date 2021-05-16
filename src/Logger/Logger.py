@@ -5,6 +5,13 @@ import sys
 class LoggerClass:
     file_date_format = '%Y%m%d'
     print_date_format = '%Y-%m-%d %H:%M:%S'
+    logger_level_err_desc = {
+        "DEBUG": "Detailed information, typically of interest only when diagnosing problems.",
+        "INFO": "Confirmation that things are working as expected.",
+        "WARNING": "An indication that something unexpected happened, or indicative of some problem in the near future (e.g. 'disk space low'. The software is still working as expected",
+        "ERROR": "Due to a more serious problem, the software has not been able to perform some function",
+        "CRITICAL": "A serious error, indicating that the program itself may be unable to continue running"
+    }
 
     def __init__(self, log_path, logging_level, log_identifier):
         """Accept required parameters for logger instantiation
@@ -28,21 +35,13 @@ class LoggerClass:
         Returns:
             logging type: logging type from logging class
         """
-        if logging_level == "DEBUG":
-            print("> Logging level 'DEBUG': Detailed information, typically of interest only when diagnosing problems.")
-            return logging.DEBUG
-        elif logging_level == "INFO":
-            print("> Logging level 'INFO': Confirmation that things are working as expected.")
-            return logging.INFO
-        elif logging_level == "WARNING":
-            print("> Logging level 'WARNING': An indication that something unexpected happened, or indicative of some problem in the near future (e.g. 'disk space low'. The software is still working as expected")
-            return logging.WARNING
-        elif logging_level == "ERROR":
-            print("> Logging level 'ERROR': Due to a more serious problem, the software has not been able to perform some function")
-            return logging.ERROR
-        elif logging_level == "CRITICAL":
-            print("> Logging level 'CRITICAL': A serious error, indicating that the program itself may be unable to continue running")
-            return logging.CRITICAL
+
+        print(f'> Logging level: \'{self.logger_level_err_desc[logging_level]}\'')
+        if logging_level == "DEBUG": return logging.DEBUG
+        elif logging_level == "INFO": return logging.INFO
+        elif logging_level == "WARNING": return logging.WARNING
+        elif logging_level == "ERROR": return logging.ERROR
+        elif logging_level == "CRITICAL": return logging.CRITICAL
 
 
     def init_logger(self):
