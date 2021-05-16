@@ -1,4 +1,4 @@
-import sys, logging
+import sys
 
 from argparse import ArgumentParser
 
@@ -25,7 +25,7 @@ def main(args):
     logger.log.info(f'Arguments: {args}')
 
     try:
-        orchestrator(args)
+        orchestrator(args, logger)
     except Exception as err:
         logger.log_traceback(err)
 

@@ -15,11 +15,19 @@ class LoggerClass:
             log_identifier (str): universal unique identifier
         """
         self.log_path = log_path
-        self.logging_level = self._set_logging_level(logging_level)
+        self.logging_level = self._get_logging_level(logging_level)
         self.log_identifier = log_identifier
         self.log = None
 
-    def _set_logging_level(self, logging_level):
+    def _get_logging_level(self, logging_level):
+        """Set logging level and print message explaining error type
+
+        Args:
+            logging_level (str): Logging type [DEBUG, INFO, WARNING, ERROR, CRITICAL]
+
+        Returns:
+            logging type: logging type from logging class
+        """
         if logging_level == "DEBUG":
             print("> Logging level 'DEBUG': Detailed information, typically of interest only when diagnosing problems.")
             return logging.DEBUG
@@ -76,6 +84,8 @@ class LoggerClass:
             sys.exit(-1)
 
     def first_default_log(self):
+        """Function that prints first log message example
+        """
         try:
             self.log.info("*********** Start Logger Execution: default log ************* \n")
             self.log.info("Type of file to be processed: %s")
@@ -84,42 +94,58 @@ class LoggerClass:
             self.log.log(logging.ERROR, f'\n first_default_log Error ({err})')
             sys.exit(-1)
 
-    def log_traceback(self, errMessage):
-        # Extract error traceback info
-        formatted_lines = traceback.format_exc().splitlines()
-        # Clean traceback lines from empty spaces
-        formatted_lines = [line.strip() for line in formatted_lines]
+    def log_traceback(self, errMessage = "", logging_level = "ERROR"):
+        """Customized log trackeback message
 
-        # Split each error line into small parts (file, line, element) to create custom message format
-        MOST_RECENT_CALL_FILE = 1
-        LAST_CALL_FILE = 3
-        most_recent_call_parts = formatted_lines[MOST_RECENT_CALL_FILE].split(",")
-        last_call_parts = formatted_lines[LAST_CALL_FILE].split(",")
+        Args:
+            errMessage (str): Contains string error message
+        """
+        traceback_log_level = self._get_logging_level(logging_level)
+        # # Extract error traceback info
+        # formatted_lines = traceback.format_exc().splitlines()
+        # # Clean traceback lines from empty spaces
+        # formatted_lines = [line.strip() for line in formatted_lines]
 
-        # Define custom traceback message format
-        FILE = 0
-        LINE = 1
-        ELEMENT = 2
+        # MOST_RECENT_CALL_FILE = 1
+        # # Split each error line into small parts (file, line, element) to create custom message format
+        # LAST_CALL_FILE = 3
+        # most_recent_call_parts = formatted_lines[MOST_RECENT_CALL_FILE].split(",")
+        # last_call_parts = formatted_lines[LAST_CALL_FILE].split(",")
 
-        most_recent_call_file = most_recent_call_parts[FILE][:-1]
-        most_recent_call_line = most_recent_call_parts[LINE][6:]
-        most_recent_call_ele = most_recent_call_parts[ELEMENT]
-        most_recent_call_location = f'{most_recent_call_file}:{most_recent_call_line}\" {most_recent_call_ele}'
+        # # Define custom traceback message format
+        # FILE = 0
+        # LINE = 1
+        # ELEMENT = 2
+        # LAST_CALL_FN =  4
+        # MOST_RECENT_CALL_FN = 2
 
-        last_call_file = last_call_parts[FILE][:-1]
-        last_call_line = last_call_parts[LINE][6:]
-        last_call_ele = last_call_parts[ELEMENT]
-        last_call_location = f'{last_call_file}:{last_call_line}\" {last_call_ele}'
+        # last_call_location = ""
+        # most_recent_call_location = ""
 
-        # Make custom message format looks beauty
-        MOST_RECENT_CALL_FN = 2
-        LAST_CALL_FN= 4
-        traceback_message = "" + \
-        f'{errMessage} \n' + \
-        f' ├── {formatted_lines[MOST_RECENT_CALL_FN]} \n' \
-        f' │   └── {most_recent_call_location} \n' \
-        f' └── {formatted_lines[LAST_CALL_FN]} \n' \
-        f'     └── {last_call_location} \n'
+
+        # if len(formatted_lines) <= 4:
+        #     most_recent_call_file = most_recent_call_parts[FILE][:-1]
+        #     most_recent_call_line = most_recent_call_parts[LINE][6:]
+        #     most_recent_call_ele = most_recent_call_parts[ELEMENT]
+        #     most_recent_call_location = f'{most_recent_call_file}:{most_recent_call_line}\" {most_recent_call_ele}'
+
+        # if len(formatted_lines) > 4:
+        #     last_call_file = last_call_parts[FILE][:-1]
+        #     last_call_line = last_call_parts[LINE][6:]
+        #     last_call_ele = last_call_parts[ELEMENT]
+        #     last_call_location = f'{last_call_file}:{last_call_line}\" {last_call_ele}'
+
+
+        # most_recent_call_fn = formatted_lines[MOST_RECENT_CALL_FN]
+        # last_call_fn = formatted_lines[LAST_CALL_FN]
+
+        # # Make custom message format looks beauty
+        # traceback_message = "" + \
+        # f'{errMessage} \n' + \
+        # f' ├── {most_recent_call_fn} \n' \
+        # f' │   └── {most_recent_call_location} \n' \
+        # f' └── {last_call_fn} \n' \
+        # f'     └── {last_call_location} \n'
 
         # Print message based on type passed
-        self.log.log(self.logging_level, traceback_message)
+        self.log.log(traceback_log_level, errMessage, exc_info=True)

@@ -1,6 +1,10 @@
 
-def orchestrator(args):
+def orchestrator(args, logger):
     """Orchestrator app
     """
 
-    print("App orchestrator execution\n")
+    try:
+        logger.log.info("App orchestrator execution\n")
+        logger.log.info("App orchestrator arguments {0} \n".format(args))
+    except Exception as err:
+        logger.log_traceback(err)
