@@ -15,9 +15,27 @@ class LoggerClass:
             log_identifier (str): universal unique identifier
         """
         self.log_path = log_path
-        self.logging_level = logging_level
+        self.logging_level = self._set_logging_level(logging_level)
         self.log_identifier = log_identifier
         self.logger = None
+
+    def _set_logging_level(self, logging_level):
+        if logging_level == "DEBUG":
+            print("> Logging level 'DEBUG': Detailed information, typically of interest only when diagnosing problems.")
+            return logging.DEBUG
+        elif logging_level == "INFO":
+            print("> Logging level 'INFO': Confirmation that things are working as expected.")
+            return logging.INFO
+        elif logging_level == "WARNING":
+            print("> Logging level 'WARNING': An indication that something unexpected happened, or indicative of some problem in the near future (e.g. 'disk space low'. The software is still working as expected")
+            return logging.WARNING
+        elif logging_level == "ERROR":
+            print("> Logging level 'ERROR': Due to a more serious problem, the software has not been able to perform some function")
+            return logging.ERROR
+        elif logging_level == "CRITICAL":
+            print("> Logging level 'CRITICAL': A serious error, indicating that the program itself may be unable to continue running")
+            return logging.CRITICAL
+
 
     def init_logger(self):
         """Initialize logger with two handlers, one for wrinte and save logs on disk and other for print out beauty on console
@@ -25,7 +43,7 @@ class LoggerClass:
         try:
             # Defining log level
             logger = logging.getLogger(self.log_identifier)
-            logger.setLevel(logging.DEBUG)
+            logger.setLevel(self.logging_level)
 
             # File handler on Disk
             file_handler = logging.FileHandler(self.log_path +
@@ -33,11 +51,11 @@ class LoggerClass:
                                                '_' + self.log_identifier +
                                                '_ETL.log', mode='w')
 
-            file_handler.setLevel(logging.DEBUG)
+            file_handler.setLevel(self.logging_level)
 
             # Console Handler
             console_handler = logging.StreamHandler(stream=sys.stdout)
-            console_handler.setLevel(logging.DEBUG)
+            console_handler.setLevel(self.logging_level)
 
             # Create formatter and addit to the handlers
             # formatter_0 = logging.Formatter('[%(asctime)s] || %(levelname)s || \
@@ -54,20 +72,19 @@ class LoggerClass:
             self.logger = logger
 
         except Exception as err:
-            self.logger.log(logging.ERROR, "\n Init Logger Error ({0})".format(err))
+            self.logger.log(logging.ERROR, f'\n Init Logger Error ({err})')
             sys.exit(-1)
 
     def first_log(self):
         try:
-            self.logger.info("*********** Start Execution ************* \n")
-            self.logger.info("Execution Start")
+            self.logger.info("*********** Start Logger Execution: default log ************* \n")
             self.logger.info("Type of file to be processed: %s")
 
         except Exception as err:
-            self.logger.log(logging.ERROR, "\n First_log Error ({})".format(err))
+            self.logger.log(logging.ERROR, f'\n First_log Error ({err})')
             sys.exit(-1)
 
-    def log_traceback(self, logging_type):
+    def log_traceback(self, errMessage):
         # Extract error traceback info
         formatted_lines = traceback.format_exc().splitlines()
         # Clean traceback lines from empty spaces
@@ -83,17 +100,26 @@ class LoggerClass:
         FILE = 0
         LINE = 1
         ELEMENT = 2
-        most_recent_call_location = "{}:{}\" {}".format(most_recent_call_parts[FILE][:-1], most_recent_call_parts[LINE][6:], most_recent_call_parts[ELEMENT])
-        last_call_location = "{}:{}\" {}".format(last_call_parts[FILE][:-1], last_call_parts[LINE][6:], last_call_parts[ELEMENT])
+
+        most_recent_call_file = most_recent_call_parts[FILE][:-1]
+        most_recent_call_line = most_recent_call_parts[LINE][6:]
+        most_recent_call_ele = most_recent_call_parts[ELEMENT]
+        most_recent_call_location = f'{most_recent_call_file}:{most_recent_call_line}\" {most_recent_call_ele}'
+
+        last_call_file = last_call_parts[FILE][:-1]
+        last_call_line = last_call_parts[LINE][6:]
+        last_call_ele = last_call_parts[ELEMENT]
+        last_call_location = f'{last_call_file}:{last_call_line}\" {last_call_ele}'
 
         # Make custom message format looks beauty
         MOST_RECENT_CALL_FN = 2
         LAST_CALL_FN= 4
         traceback_message = "" + \
-        "├── " + formatted_lines[MOST_RECENT_CALL_FN] + "\n" \
-        " │   └── " + most_recent_call_location + "\n" \
-        " └── " + formatted_lines[LAST_CALL_FN] + "\n" \
-        "     └── " + last_call_location + "\n"
+        f'{errMessage} \n' + \
+        f' ├── {formatted_lines[MOST_RECENT_CALL_FN]} \n' \
+        f' │   └── {most_recent_call_location} \n' \
+        f' └── {formatted_lines[LAST_CALL_FN]} \n' \
+        f'     └── {last_call_location} \n'
 
         # Print message based on type passed
-        self.logger.log(logging_type, traceback_message)
+        self.logger.log(self.logging_level, traceback_message)
