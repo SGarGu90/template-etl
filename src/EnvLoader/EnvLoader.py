@@ -88,5 +88,3 @@ class EnvLoader:
         self.log_path = self.CONFIG['LOGGING']['LOG_PATH']
         self.log_level = self.CONFIG['LOGGING']['LOG_LEVEL']
         self.log_identifier = self.CONFIG['LOGGING']['LOG_IDENTIFIER']
-
-        self.input_file = self.CONFIG['FILE_PATH']['INPUT_FILE']
