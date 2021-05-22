@@ -69,7 +69,7 @@ class LoggerClass:
             #                                 (%(filename)s:%(lineno)s || \
             #                                 %(message)s', datefmt=self.print_date_format)
             # formatter_1 = logging.Formatter('%(levelname)s [%(asctime)s] \n ├── %(filename)s:%(lineno)s \n └── %(message)s', datefmt=self.print_date_format)
-            formatter_2 = logging.Formatter('%(levelname)s [%(asctime)s] %(filename)s:%(lineno)s \n %(message)s \n', datefmt=self.print_date_format)
+            formatter_2 = logging.Formatter('(%(levelname)s) [%(asctime)s] %(filename)s:%(lineno)s \n %(message)s \n', datefmt=self.print_date_format)
             file_handler.setFormatter(formatter_2)
             console_handler.setFormatter(formatter_2)
 
