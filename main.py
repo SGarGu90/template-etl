@@ -23,6 +23,7 @@ def main(args):
     logger.log.info(f'Arguments: {args}')
 
     try:
+        orchestrator(config, logger)
 
         data_file = FileManager(
             dir_path = config.file_manager_path,
@@ -36,7 +37,6 @@ def main(args):
         read_file_result = data_file.read_file()
         print(f'Example reading written file {read_file_result}')
 
-        orchestrator(config, logger)
     except Exception as err:
         logger.log_traceback(err)
 
