@@ -14,16 +14,16 @@ class EnvLoader:
     CONFIG = None
 
     app_version = None
+    app_debug = None
+    sample_data_path = None
+
     log_path = None
     log_level = None
     log_identifier = None
 
-    sampledata_dir_path = None
-
-    filemanager_path = None
-    filemanager_filename = None
-    filemanager_operation = None
-
+    file_manager_path = None
+    file_manager_filename = None
+    file_manager_operation = None
 
     def __init__(self, env_type = "dev"):
         """Environment loader constructor where initialized and config based on environment type
@@ -78,26 +78,28 @@ class EnvLoader:
 
     def __set_environment_config_values(self):
         self.app_version = self.CONFIG['APP_INFO']['APP_VERSION']
+        self.sample_data_path = self.CONFIG['APP_INFO']['SAMPLE_DATA_PATH']
+        self.app_debug = self.CONFIG['APP_INFO']['DEBUG']
 
         self.log_path = self.CONFIG['LOGGING']['LOG_PATH']
         self.log_level = self.CONFIG['LOGGING']['LOG_LEVEL']
         self.log_identifier = self.CONFIG['LOGGING']['LOG_IDENTIFIER']
 
-        self.sampledata_dir_path = self.CONFIG['APP_INFO']['SAMPLE_DATA_DIR_NAME']
 
-        self.filemanager_path = self.CONFIG['FILE_CONTENT_MANAGER']['DIR_PATH']
-        self.filemanager_filename = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_NAME']
-        self.filemanager_operation = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_OPERATION']
+        self.file_manager_path = self.CONFIG['FILE_CONTENT_MANAGER']['DIR_PATH']
+        self.file_manager_filename = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_NAME']
+        self.file_manager_write_op = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_WRITE_OP']
+        self.file_manager_read_op = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_READ_OP']
 
     def __print_environment_values(self):
         print(f'> App version: \'{self.app_version}\'')
+        print(f'> Sample data dir path: \'{self.sample_data_path}\'')
+        print(f'> App debug: \'{self.app_debug}\'')
         print("")
-        print(f'> Logger dir path \'{self.log_path}\'')
-        print(f'> Logger level \'{self.log_level}\'')
-        print(f'> Logger identifier \'{self.log_identifier}\'')
+        print(f'> Logger dir path: \'{self.log_path}\'')
+        print(f'> Logger level: \'{self.log_level}\'')
+        print(f'> Logger identifier: \'{self.log_identifier}\'')
         print("")
-        print(f'> Sample data dir path \'{self.sampledata_dir_path}\'')
-        print("")
-        print(f'> File manager dir path \'{self.filemanager_path}\'')
-        print(f'> File manager file path \'{self.filemanager_filename}\'')
-        print(f'> File manager operation \'{self.filemanager_operation}\'')
+        print(f'> File manager dir path: \'{self.file_manager_path}\'')
+        print(f'> File manager file path: \'{self.file_manager_filename}\'')
+        print(f'> File manager operation: \'{self.file_manager_operation}\'')

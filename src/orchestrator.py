@@ -1,4 +1,7 @@
 
+from src.FileManager.FileManager import FileManager
+
+
 def orchestrator(config, logger):
     """Orchestrator app
     """
