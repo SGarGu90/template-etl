@@ -36,7 +36,7 @@ class LoggerClass:
             logging type: logging type from logging class
         """
 
-        print(f'> Logging level: \'{self.logger_level_err_desc[logging_level]}\'')
+        print(f'> Logging level ({logging_level}): \'{self.logger_level_err_desc[logging_level]}\'')
         if logging_level == "DEBUG": return logging.DEBUG
         elif logging_level == "INFO": return logging.INFO
         elif logging_level == "WARNING": return logging.WARNING
@@ -53,10 +53,9 @@ class LoggerClass:
             logger.setLevel(self.logging_level)
 
             # File handler on Disk
-            file_handler = logging.FileHandler(self.log_path +
-                                               datetime.date.today().strftime(self.file_date_format) +
-                                               '_' + self.log_identifier +
-                                               '.log', mode='w')
+            dir_path = self.log_path.rstrip('/')
+            current_date = datetime.date.today().strftime(self.file_date_format)
+            file_handler = logging.FileHandler(f'{dir_path}/{current_date}__{self.log_identifier}.log', mode='w')
 
             file_handler.setLevel(self.logging_level)
 
