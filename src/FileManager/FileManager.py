@@ -1,8 +1,5 @@
 
 
-from asyncore import write
-
-
 class FileManager:
     # File operations
     # 'r' Open a file for reading. (default)
