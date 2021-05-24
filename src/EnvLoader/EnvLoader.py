@@ -85,7 +85,6 @@ class EnvLoader:
         self.log_level = self.CONFIG['LOGGING']['LOG_LEVEL']
         self.log_identifier = self.CONFIG['LOGGING']['LOG_IDENTIFIER']
 
-
         self.file_manager_path = self.CONFIG['FILE_CONTENT_MANAGER']['DIR_PATH']
         self.file_manager_filename = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_NAME']
         self.file_manager_write_op = self.CONFIG['FILE_CONTENT_MANAGER']['FILE_WRITE_OP']
